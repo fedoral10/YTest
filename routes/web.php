@@ -18,6 +18,12 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+
 Route::middleware('auth')->group(function () {
     Route::get('/', function () {
         //$gestions = Gestion::all();
@@ -43,10 +49,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/gestion', function (Request $request) {
         $newGestion = new Gestion;
         $newGestion->nombre = $request->input('nombre');
+        $newGestion->user_id = Auth::user()->id;
+        $newGestion->usuario = Auth::user()->name;
         
         $newGestion->aplicaVisitaTecnica = $request->input('aplicaVisitaTecnica') =='on'?1:0;
         $newGestion->save();
-
+        
         return redirect()->route('gestion.list')->with('info', 'Creado Exitosamente!');
     })->name('gestion.store');
 
@@ -55,7 +63,6 @@ Route::middleware('auth')->group(function () {
         $gestion->delete();
         return redirect()->route('gestion.list')->with('info', 'Eliminado Exitosamente!');
     })->name('gestion.remove');
-
 
     Route::get('/ticket/all',function (){
         $gestionesCliente = GestionCliente::where('atendido', '=', 0)->orderBy('created_at', 'asc')->get();
@@ -74,10 +81,8 @@ Route::middleware('auth')->group(function () {
         $gestionCliente = new GestionCliente();
         $gestionCliente->atendido = 0;
         $gestionCliente->nombreGestion = $request->input('nombre');
-        $gestionCliente->user_id = Auth::id();
-
-        //echo $request->input('nombre');
-
+        $gestionCliente->user_id = Auth::user()->id;
+        
         return $gestionCliente->save();
     })->name('gestionCliente.new');
 
@@ -100,7 +105,3 @@ Route::middleware('auth')->group(function () {
     });
 });
 
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
