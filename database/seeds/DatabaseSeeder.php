@@ -35,7 +35,8 @@ class DatabaseSeeder extends Seeder
             $obj = new Gestion();
             $obj->nombre = $gestion;
             $obj->aplicaVisitaTecnica = 0;
-
+            $obj->user_id = 1;
+            $obj->usuario= "admin";
             $obj->save();
         }
     }

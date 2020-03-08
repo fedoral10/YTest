@@ -169,6 +169,11 @@
     function atenderCliente(){
         ticket={}
         if(gestionClienteList.length == 0){
+            Swal.fire({
+                icon: 'info',
+                title: 'Tickets',
+                text: 'No hay tickets pendientes',
+                })
             return
         }
 

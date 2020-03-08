@@ -34,7 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/gestion/all', function () {
         $gestions = Gestion::all();
         return $gestions;
-    })->name('gestion.list');
+    })->name('gestion.all');
 
     Route::get('/gestion/create', function () {
         return view('gestion.create');
@@ -43,7 +43,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/gestion', function (Request $request) {
         $newGestion = new Gestion;
         $newGestion->nombre = $request->input('nombre');
-        $newGestion->aplicaVisitaTecnica = $request->input('aplicaVisitaTecnica');
+        
+        $newGestion->aplicaVisitaTecnica = $request->input('aplicaVisitaTecnica') =='on'?1:0;
         $newGestion->save();
 
         return redirect()->route('gestion.list')->with('info', 'Creado Exitosamente!');
