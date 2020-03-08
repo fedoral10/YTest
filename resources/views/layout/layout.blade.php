@@ -4,11 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Prueba de PHP</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
+    <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
 </head>
 
 <body>
-    @yield('contenido')
+    <a class="btn btn-danger btn-sm float-right" href="javascript: document.getElementById('logout').submit()">Cerrar Sesion</a>
+    <form id="logout" method="post" action="{{route('logout')}}" display="none">
+        @csrf
+    </form>
+    <div class="my-4">
+        @yield('contenido')
+    </div>
 </body>
+
 </html>

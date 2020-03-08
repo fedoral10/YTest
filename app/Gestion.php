@@ -8,7 +8,11 @@ class Gestion extends Model
 {
     //
 
-    public function user(){
+    public function User(){
         return $this->belongsTo('App\User');
+    }
+
+    public function Tickets(){
+        return $this->hasMany('App\Ticket');
     }
 }

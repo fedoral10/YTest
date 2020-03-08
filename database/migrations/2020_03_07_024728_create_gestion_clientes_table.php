@@ -15,7 +15,9 @@ class CreateGestionClientesTable extends Migration
     {
         Schema::create('gestion_clientes', function (Blueprint $table) {
             $table->id();
+            $table->string('nombreGestion');
             $table->tinyInteger('atendido')->default('0')->nullable();
+            $table->integer('user_id')->nullable();
             $table->timestamps();
         });
     }
